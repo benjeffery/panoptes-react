@@ -1,0 +1,41 @@
+.tab-content {
+  .tab-pane {
+    display: none;
+    clear:both;
+    //z-index:1; Not sure why this was here
+    padding: 10px 5px;
+  }
+  .tab-pane.active {
+    display: block;
+  }
+}
+
+.tabs{
+  white-space: nowrap;
+  //overflow: hidden; Comment out for now as although ugly it at least lets you select the tab
+  .tab {
+    display:inline-block;
+    position:relative;
+    border-top-left-radius:8px;
+    border-top-right-radius:8px;
+    margin-right:3px;
+    padding: 3px 10px 7px;
+    cursor:pointer;
+    //z-index:2; Not sure why this was here...
+    top: 1px;
+    background-color:rgb(240,240,240);
+    border:1px solid rgb(160,160,160);
+    border-bottom-width: 0;
+    color:rgb(80,80,80);
+    font-weight:bold;
+    opacity:0.5;
+  }
+  .tab.active {
+    top: 0;
+    color:rgb(0,0,0);
+    opacity: inherit;
+  }
+  .tab.inactive:hover {
+    opacity:0.8;
+  }
+}
