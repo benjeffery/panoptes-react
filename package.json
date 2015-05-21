@@ -37,8 +37,9 @@
   },
   "dependencies": {
     "classnames": "^2.1.1",
-    "flux": "^2.0.3",
+    "fluxxor": "^1.5.4",
     "object-assign": "^2.0.0",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "underscore": "^1.8.3"
   }
 }

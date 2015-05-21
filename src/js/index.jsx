@@ -1,4 +1,16 @@
 const React = require('react');
-const App = require('./components/App.jsx');
+const Fluxxor = require('fluxxor');
+const Panoptes = require('components/Panoptes.jsx');
+const LayoutStore = require('stores/LayoutStore');
+const LayoutActions = require('actions/LayoutActions');
 
-React.render(<App />, document.getElementById('main'));
+let stores = {
+  LayoutStore: new LayoutStore()
+};
+
+let actions = {
+  layout: LayoutActions
+};
+
+let flux = new Fluxxor.Flux(stores, actions);
+React.render(<Panoptes flux={flux}/>, document.getElementById('main'));
