@@ -1,10 +1,11 @@
 const React = require('react');
 const ValidComponentChildren = require('../utils/ValidComponentChildren');
 const classNames = require('classnames');
-
-/** @namespace child.props.tabId */
+const PureRenderMixin = require('mixins/PureRenderMixin');
 
 let TabbedArea = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     activeTab: React.PropTypes.any,
     onSelect: React.PropTypes.func

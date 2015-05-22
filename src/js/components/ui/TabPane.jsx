@@ -1,7 +1,10 @@
 const React = require('react');
 const classNames = require('classnames');
+const PureRenderMixin = require('mixins/PureRenderMixin');
 
 let TabPane = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     active: React.PropTypes.bool
   },

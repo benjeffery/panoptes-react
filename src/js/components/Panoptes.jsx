@@ -15,14 +15,14 @@ let App = React.createClass({
 
   render() {
     let actions = this.getFlux().actions.layout;
+    let state = this.state.toJS();
     return (
       <div>
-        <TabbedArea activeTab={this.state.topLevelTab} onSelect={actions.switchTab}>
+        <TabbedArea activeTab={state.selectedTab} onSelect={actions.switchTab}>
           <TabPane tabId='1' tab='Tab 1'>TabPane 1 content</TabPane>
           <TabPane tabId='2' tab='Tab 2'>TabPane 2 content</TabPane>
           <TabPane tabId='3' tab='Tab 3'>TabPane 3 content</TabPane>
         </TabbedArea>
-
       </div>
     );
   }
