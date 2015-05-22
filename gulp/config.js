@@ -23,9 +23,9 @@ module.exports = {
   },
   browserify: {
     settings: {
-      transform: ['reactify', 'babelify']
+      transform: [["reactify", {"es6": true}], 'babelify']
     },
-    src: src + '/js/index.jsx',
+    src: src + '/js/index.js',
     dest: dest + '/js',
     outputName: 'index.js',
     debug: gutil.env.type === 'dev'

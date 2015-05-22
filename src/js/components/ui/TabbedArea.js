@@ -11,29 +11,28 @@ let TabbedArea = React.createClass({
     onSelect: React.PropTypes.func
   },
 
-  renderTab(child, index) {
-    let that = this;
-    function onClick(e) {
-      that.handleClick(e, child.props.tabId)
-    }
+  renderTab(tab) {
+    let id = tab.props.tabId;
     let classes = {
       tab: true,
-      active: (child.props.tabId === this.props.activeTab),
-      inactive: (child.props.tabId !== this.props.activeTab)
+      active: (id === this.props.activeTab),
+      inactive: (id !== this.props.activeTab)
     };
     return (
-      <div className={classNames(classes)} onClick={onClick}>
-        {child.props.tab}
+      <div className={classNames(classes)}
+           key = {id}
+           onClick={this.handleClick.bind(this, id)}>
+        {tab.props.tabName}
       </div>
     )
   },
 
-  renderPane(child, index) {
+  renderPane(tab) {
     return React.cloneElement(
-      child,
+      tab,
       {
-        active: (child.props.tabId === this.props.activeTab),
-        key: child.key ? child.key : index
+        active: (tab.props.tabId === this.props.activeTab),
+        key: tab.props.tabId
       })
   },
 
@@ -50,7 +49,7 @@ let TabbedArea = React.createClass({
     )
   },
 
-  handleClick(e, tabId) {
+  handleClick(tabId, e) {
     if (this.props.onSelect) {
       e.preventDefault();
       this.props.onSelect(tabId);

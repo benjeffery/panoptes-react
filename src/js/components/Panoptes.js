@@ -1,9 +1,14 @@
 const React = require('react');
+const _ = require('lodash');
+
 const FluxMixin = require('mixins/FluxMixin');
 const StoreWatchMixin = require('mixins/StoreWatchMixin');
 
-const TabbedArea = require('ui/TabbedArea.jsx');
-const TabPane = require('ui/TabPane.jsx');
+const TabbedArea = require('ui/TabbedArea');
+const TabPane = require('ui/TabPane');
+
+const forceImport = require('ui/HelloWorld');
+
 
 
 let App = React.createClass({
@@ -13,15 +18,24 @@ let App = React.createClass({
     return this.getFlux().store('LayoutStore').getState();
   },
 
+
+
   render() {
     let actions = this.getFlux().actions.layout;
     let state = this.state.toJS();
+
+    let tabs = _.map(state.tabs.tabs, (tab) =>
+      <TabPane
+        tabId={tab.tabId}
+        key={tab.tabId}
+        tabName={tab.name}>
+        {React.createElement(require(tab.component), tab.props)}
+      </TabPane>);
+
     return (
       <div>
-        <TabbedArea activeTab={state.selectedTab} onSelect={actions.switchTab}>
-          <TabPane tabId='1' tab='Tab 1'>TabPane 1 content</TabPane>
-          <TabPane tabId='2' tab='Tab 2'>TabPane 2 content</TabPane>
-          <TabPane tabId='3' tab='Tab 3'>TabPane 3 content</TabPane>
+        <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.switchTab}>
+          {tabs}
         </TabbedArea>
       </div>
     );
