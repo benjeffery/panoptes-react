@@ -12,7 +12,7 @@ let TabbedArea = React.createClass({
   },
 
   renderTab(tab) {
-    let id = tab.props.tabId;
+    let id = tab.props.compId;
     let classes = {
       tab: true,
       active: (id === this.props.activeTab),
@@ -22,7 +22,7 @@ let TabbedArea = React.createClass({
       <div className={classNames(classes)}
            key = {id}
            onClick={this.handleClick.bind(this, id)}>
-        {tab.props.tabName}
+        {tab.props.title}
       </div>
     )
   },
@@ -31,8 +31,8 @@ let TabbedArea = React.createClass({
     return React.cloneElement(
       tab,
       {
-        active: (tab.props.tabId === this.props.activeTab),
-        key: tab.props.tabId
+        active: (tab.props.compId === this.props.activeTab),
+        key: tab.props.compId
       })
   },
 

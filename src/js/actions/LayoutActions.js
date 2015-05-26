@@ -2,8 +2,8 @@ const Constants = require('../constants/Constants');
 const LAYOUT = Constants.LAYOUT;
 
 let LayoutActions = {
-  switchTab: function(tabId) {
-    this.dispatch(LAYOUT.TAB_SWITCH, { tabId: tabId });
+  switchTab: function(compId) {
+    this.dispatch(LAYOUT.TAB_SWITCH, { compId: compId });
   }
 };
 

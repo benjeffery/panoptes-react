@@ -1,5 +1,5 @@
 {
-  "name": "panoptes",
+  "title": "panoptes",
   "version": "0.1.0",
   "description": "Panoptes: Explore genomic data",
   "author": "",
@@ -41,6 +41,8 @@
     "immutable": "^3.7.3",
     "lodash": "^3.9.1",
     "object-assign": "^2.0.0",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "react-draggable": "^0.8.0",
+    "react-resizable": "^0.4.0"
   }
 }

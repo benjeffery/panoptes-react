@@ -6,8 +6,9 @@ const StoreWatchMixin = require('mixins/StoreWatchMixin');
 
 const TabbedArea = require('ui/TabbedArea');
 const TabPane = require('ui/TabPane');
-
-const forceImport = require('ui/HelloWorld');
+const Popups = require('ui/Popups');
+const Popup = require('ui/Popup');
+const HelloWorld = require('ui/HelloWorld');
 
 let Panoptes = React.createClass({
   mixins: [ FluxMixin, StoreWatchMixin('LayoutStore')],
@@ -21,15 +22,27 @@ let Panoptes = React.createClass({
     let state = this.state.toJS();
 
     return (
-      <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.switchTab}>
-        {_.map(state.tabs.tabs, (tab) =>
-          <TabPane
-            tabId={tab.tabId}
-            key={tab.tabId}
-            tabName={tab.name}>
-            {React.createElement(require(tab.component), tab.props)}
-          </TabPane>)}
-      </TabbedArea>
+      <div>
+        <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.switchTab}>
+          {_.map(state.tabs.tabs, (tab) =>
+            <TabPane
+              compId={tab.compId}
+              key={tab.compId}
+              title={tab.title}>
+              {React.createElement(require(tab.component), tab.props)}
+            </TabPane>)}
+        </TabbedArea>
+        <Popups>
+          {_.map(state.popups.popups, (popup) =>
+            <Popup
+              compId={popup.compId}
+              key={popup.compId}
+              title={popup.title}
+              initPosition={popup.initPosition}>
+              {React.createElement(require(popup.component), popup.props)}
+            </Popup>)}
+        </Popups>
+      </div>
     );
   }
 

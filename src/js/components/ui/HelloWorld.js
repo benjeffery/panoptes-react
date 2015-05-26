@@ -1,7 +1,7 @@
 const React = require('react');
 const PureRenderMixin = require('mixins/PureRenderMixin');
 
-let TabPane = React.createClass({
+let HelloWorld = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
@@ -19,4 +19,4 @@ let TabPane = React.createClass({
 
 });
 
-module.exports = TabPane;
+module.exports = HelloWorld;

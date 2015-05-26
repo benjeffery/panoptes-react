@@ -6,8 +6,7 @@ let TabPane = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    tabId: React.PropTypes.string.isRequired,
-    tabName: React.PropTypes.string,
+    title: React.PropTypes.string,
     active: React.PropTypes.bool //Usually set by TabbedArea
   },
 
