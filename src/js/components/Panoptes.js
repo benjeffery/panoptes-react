@@ -9,38 +9,30 @@ const TabPane = require('ui/TabPane');
 
 const forceImport = require('ui/HelloWorld');
 
-
-
-let App = React.createClass({
+let Panoptes = React.createClass({
   mixins: [ FluxMixin, StoreWatchMixin('LayoutStore')],
 
   getStateFromFlux() {
     return this.getFlux().store('LayoutStore').getState();
   },
 
-
-
   render() {
     let actions = this.getFlux().actions.layout;
     let state = this.state.toJS();
 
-    let tabs = _.map(state.tabs.tabs, (tab) =>
-      <TabPane
-        tabId={tab.tabId}
-        key={tab.tabId}
-        tabName={tab.name}>
-        {React.createElement(require(tab.component), tab.props)}
-      </TabPane>);
-
     return (
-      <div>
-        <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.switchTab}>
-          {tabs}
-        </TabbedArea>
-      </div>
+      <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.switchTab}>
+        {_.map(state.tabs.tabs, (tab) =>
+          <TabPane
+            tabId={tab.tabId}
+            key={tab.tabId}
+            tabName={tab.name}>
+            {React.createElement(require(tab.component), tab.props)}
+          </TabPane>)}
+      </TabbedArea>
     );
   }
 
 });
 
-module.exports = App;
+module.exports = Panoptes;

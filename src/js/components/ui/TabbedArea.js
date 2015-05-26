@@ -7,7 +7,7 @@ let TabbedArea = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    activeTab: React.PropTypes.any,
+    activeTab: React.PropTypes.string,
     onSelect: React.PropTypes.func
   },
 
@@ -39,10 +39,10 @@ let TabbedArea = React.createClass({
   render() {
     return (
       <div {...this.props} className="tabbed-area">
-        <div id={this.props.id} className="tabs">
+        <div className="tabs">
           {ValidComponentChildren.map(this.props.children, this.renderTab, this)}
         </div>
-        <div id={this.props.id} className="tab-content">
+        <div className="tab-content">
           {ValidComponentChildren.map(this.props.children, this.renderPane, this)}
         </div>
       </div>
