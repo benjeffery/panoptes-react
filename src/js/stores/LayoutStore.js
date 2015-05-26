@@ -6,71 +6,82 @@ const LAYOUT = Constants.LAYOUT;
 
 var LayoutStore = Fluxxor.createStore({
 
-  initialize: function() {
+  initialize: function () {
     this.state = Immutable.fromJS({
-      tabs: {
-        selectedTab:'T1',
-        tabs: [
-          {
-            component: 'ui/HelloWorld',
-            title: 'WTF TAB',
-            compId: 'T1',
-            props: {
-              msg: 'WTF'
-            }
-          },
-          {
-            component: 'ui/HelloWorld',
-            title: 'OMG TAB',
-            compId: 'T2',
-            props: {
-              msg: 'OMG'
-            }
+      components: {
+        'T1': {
+          component: 'ui/HelloWorld',
+          title: 'WTF TAB',
+          props: {
+            msg: 'WTF'
           }
-        ]
+        },
+        'T2': {
+          component: 'ui/HelloWorld',
+          title: 'OMG TAB',
+          props: {
+            msg: 'OMG'
+          }
+        },
+        'P1': {
+          component: 'ui/HelloWorld',
+          title: 'WTF POP',
+          props: {
+            msg: 'WTF'
+          }
+        },
+        'P2': {
+          component: 'ui/HelloWorld',
+          title: 'OMG POP',
+          initPosition: {
+            x: 500,
+            y: 100,
+          },
+          initSize: {
+            width: 300,
+            height: 200
+          },
+          props: {
+            msg: 'OMG'
+          }
+        }
+      },
+      tabs: {
+        selectedTab: 'T1',
+        components: ['T1', 'T2']
       },
       popups: {
-        popups: [
-          {
-            component: 'ui/HelloWorld',
-            title: 'WTF POP',
-            compId: 'P1',
-            props: {
-              msg: 'WTF'
-            }
-          },
-          {
-            component: 'ui/HelloWorld',
-            title: 'OMG POP',
-            compId: 'P2',
-            initPosition: {
-              x: 500,
-              y: 100,
-              w: 300,
-              h: 200
-            },
-            props: {
-              msg: 'OMG'
-            }
-          }
-
-        ]
+        popups: ['P1', 'P2']
 
       }
 
     });
 
     this.bindActions(
-      LAYOUT.TAB_SWITCH, this.switchTab
+      LAYOUT.TAB_SWITCH, this.tabSwitch,
+      LAYOUT.POPUP_MOVE, this.popupMove,
+      LAYOUT.POPUP_RESIZE, this.popupResize
     );
   },
 
-  switchTab: function(payload) {
-    this.state = this.state.setIn(['tabs','selectedTab'], payload.compId);
+  tabSwitch: function (payload) {
+    this.state = this.state.setIn(['tabs', 'selectedTab'], payload.compId);
     this.emit('change');
   },
 
-  getState: function() {
+  popupMove: function (payload) {
+    let {compId, pos} = payload;
+    this.state = this.state.mergeIn(['components', compId, 'initPosition'], pos);
+    this.emit('change');
+  },
+
+  popupResize: function (payload) {
+    let {compId, size} = payload;
+    this.state = this.state.mergeIn(['components', compId, 'initSize'], size);
+    this.emit('change');
+  },
+
+  getState: function () {
     return this.state;
   }
 

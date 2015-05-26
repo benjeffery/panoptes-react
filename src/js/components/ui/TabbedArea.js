@@ -11,6 +11,13 @@ let TabbedArea = React.createClass({
     onSelect: React.PropTypes.func
   },
 
+  handleClick(tabId, e) {
+    if (this.props.onSelect) {
+      e.preventDefault();
+      this.props.onSelect(tabId);
+    }
+  },
+
   renderTab(tab) {
     let id = tab.props.compId;
     let classes = {
@@ -47,13 +54,6 @@ let TabbedArea = React.createClass({
         </div>
       </div>
     )
-  },
-
-  handleClick(tabId, e) {
-    if (this.props.onSelect) {
-      e.preventDefault();
-      this.props.onSelect(tabId);
-    }
   }
 });
 

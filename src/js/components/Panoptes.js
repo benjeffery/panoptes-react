@@ -23,24 +23,33 @@ let Panoptes = React.createClass({
 
     return (
       <div>
-        <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.switchTab}>
-          {_.map(state.tabs.tabs, (tab) =>
-            <TabPane
-              compId={tab.compId}
-              key={tab.compId}
-              title={tab.title}>
-              {React.createElement(require(tab.component), tab.props)}
-            </TabPane>)}
+        <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.tabSwitch}>
+          {_.map(state.tabs.components, tabId => {
+            let tab = state.components[tabId];
+            return (
+              <TabPane
+                compId={tabId}
+                key={tabId}
+                title={tab.title}>
+                  {React.createElement(require(tab.component), tab.props)}
+              </TabPane>
+            )})}
         </TabbedArea>
         <Popups>
-          {_.map(state.popups.popups, (popup) =>
-            <Popup
-              compId={popup.compId}
-              key={popup.compId}
-              title={popup.title}
-              initPosition={popup.initPosition}>
-              {React.createElement(require(popup.component), popup.props)}
-            </Popup>)}
+          {_.map(state.popups.popups, popupId => {
+            let popup = state.components[popupId];
+            return (
+              <Popup
+                compId={popupId}
+                key={popupId}
+                title={popup.title}
+                initPosition={popup.initPosition}
+                initSize={popup.initSize}
+                onMoveStop={actions.popupMove.bind(this, popupId)}
+                onResizeStop={actions.popupResize.bind(this, popupId)}>
+                  {React.createElement(require(popup.component), popup.props)}
+              </Popup>
+            )})}
         </Popups>
       </div>
     );

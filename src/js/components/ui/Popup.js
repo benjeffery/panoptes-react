@@ -1,9 +1,9 @@
 const React = require('react');
 const PureRenderMixin = require('mixins/PureRenderMixin');
+const _ = require('lodash');
 
 const Draggable = require('react-draggable');
 const Resizable = require('react-resizable').Resizable;
-
 
 
 let Popup = React.createClass({
@@ -14,9 +14,13 @@ let Popup = React.createClass({
     initPosition: React.PropTypes.shape({
       x: React.PropTypes.number,
       y: React.PropTypes.number,
+    }),
+    initSize: React.PropTypes.shape({
       w: React.PropTypes.number,
       h: React.PropTypes.number
     }),
+    onMoveStop: React.PropTypes.func,
+    onResizeStop: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -24,34 +28,46 @@ let Popup = React.createClass({
       title: 'Popup',
       initPosition: {
         x: 100,
-        y: 100,
-        w: 300,
-        h: 200
+        y: 100
+      },
+      initSize: {
+        width: 300,
+        height: 200
       }
     };
   },
 
   getInitialState() {
-    return {
-      position: this.props.initPosition
-    };
+    return _.clone(this.props.initSize);
   },
 
-  onResize(event, {element, size}) {
-    this.setState({position:{w:size.width, h:size.height}});
+  handleResize(event, {element, size}) {
+    this.setState(size);
+  },
+  handleResizeStop(event, {element, size}) {
+    if (this.props.onResizeStop)
+      this.props.onResizeStop(size);
+  },
+  handleMoveStop(event, ui) {
+    let {left, top} = ui.position;
+    if (this.props.onMoveStop)
+      this.props.onMoveStop({x:left, y:top})
   },
 
   render() {
-    let { initPosition, ...other } = this.props;
-    let {w, h} = this.state.position;
+    let { initPosition, initSize, ...other } = this.props;
     return (
-      <Draggable handle='.header' start={initPosition} moveOnStartChange={true}>
-        <Resizable width={initPosition.w} height={initPosition.h}
+      <Draggable handle='.header'
+                 start={initPosition}
+                 moveOnStartChange={true}
+                 onStop={this.handleMoveStop}>
+        <Resizable width={initSize.width} height={initSize.height}
                    minConstraints={[150, 150]}
                    maxConstraints={[500, 300]}
-                   onResize={this.onResize}>
+                   onResize={this.handleResize}
+                   onResizeStop={this.handleResizeStop}>
           <div className="popup"
-               style={{width: w + 'px', height: h + 'px'}}
+               style={this.state}
                {...other}>
             <div className="header">
               Header
