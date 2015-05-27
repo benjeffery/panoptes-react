@@ -19,35 +19,36 @@ let Panoptes = React.createClass({
 
   render() {
     let actions = this.getFlux().actions.layout;
-    let state = this.state.toJS();
+    let state = this.state;
 
     return (
       <div>
-        <TabbedArea activeTab={state.tabs.selectedTab} onSelect={actions.tabSwitch}>
-          {_.map(state.tabs.components, tabId => {
-            let tab = state.components[tabId];
+        <TabbedArea activeTab={state.getIn(['tabs','selectedTab'])}
+                    onSelect={actions.tabSwitch}>
+          {state.getIn(['tabs','components']).map(tabId => {
+            let tab = state.getIn(['components',tabId]);
             return (
               <TabPane
                 compId={tabId}
                 key={tabId}
-                title={tab.title}>
-                  {React.createElement(require(tab.component), tab.props)}
+                title={tab.get('title')}>
+                  {React.createElement(require(tab.get('component')), tab.get('props').toObject())}
               </TabPane>
             )})}
         </TabbedArea>
         <Popups>
-          {_.map(state.popups.popups, popupId => {
-            let popup = state.components[popupId];
+          {state.getIn(['popups','components']).map(popupId => {
+            let popup = state.getIn(['components',popupId]);
             return (
               <Popup
                 compId={popupId}
                 key={popupId}
-                title={popup.title}
-                initPosition={popup.initPosition}
-                initSize={popup.initSize}
+                title={popup.get('title')}
+                initPosition={popup.get('initPosition')}
+                initSize={popup.get('initSize')}
                 onMoveStop={actions.popupMove.bind(this, popupId)}
                 onResizeStop={actions.popupResize.bind(this, popupId)}>
-                  {React.createElement(require(popup.component), popup.props)}
+                  {React.createElement(require(popup.get('component')), popup.get('props').toObject())}
               </Popup>
             )})}
         </Popups>

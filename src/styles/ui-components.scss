@@ -42,20 +42,16 @@
 
 .popup {
   position: absolute;
-  border-width:1px;
-  border-style:solid;
-  border-color:rgb(110,110,110);
+  border: 1px solid rgb(110, 110, 110);
   box-shadow: 2px 2px 20px 4px rgba(0,0,0,0.75);
 
   .header {
     height: 16px;
-    padding:7px;
-    padding-left:12px;
+    padding: 7px 7px 7px 12px;
     cursor:move;
     font-size:10pt;
     font-weight:bold;
     color:rgb(255,255,255);
-    background-color: rgb(56, 135, 142);
     background-image:none;
     background: rgb(63,151,158); /* Old browsers */
     background: -moz-linear-gradient(top, rgb(63,151,158) 0%, rgb(56,135,142) 100%); /* FF3.6+ */

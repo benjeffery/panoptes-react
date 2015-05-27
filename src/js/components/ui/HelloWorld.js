@@ -5,7 +5,7 @@ let HelloWorld = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    msg: React.PropTypes.string
+    msg: React.PropTypes.string.isRequired
   },
 
   render() {

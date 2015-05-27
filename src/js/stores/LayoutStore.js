@@ -51,7 +51,7 @@ var LayoutStore = Fluxxor.createStore({
         components: ['T1', 'T2']
       },
       popups: {
-        popups: ['P1', 'P2']
+        components: ['P1', 'P2']
 
       }
 

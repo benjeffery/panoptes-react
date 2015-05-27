@@ -43,6 +43,7 @@
     "object-assign": "^2.0.0",
     "react": "^0.13.3",
     "react-draggable": "^0.8.0",
+    "react-immutable-proptypes": "^0.1.7",
     "react-resizable": "^0.4.0"
   }
 }

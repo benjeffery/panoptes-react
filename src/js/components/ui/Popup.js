@@ -1,7 +1,8 @@
 const React = require('react');
 const PureRenderMixin = require('mixins/PureRenderMixin');
 const _ = require('lodash');
-
+const Immutable = require('immutable');
+const ImmutablePropTypes = require('react-immutable-proptypes');
 const Draggable = require('react-draggable');
 const Resizable = require('react-resizable').Resizable;
 
@@ -11,11 +12,11 @@ let Popup = React.createClass({
 
   propTypes: {
     title: React.PropTypes.string, //Used in title bar
-    initPosition: React.PropTypes.shape({
+    initPosition: ImmutablePropTypes.shape({
       x: React.PropTypes.number,
-      y: React.PropTypes.number,
+      y: React.PropTypes.number
     }),
-    initSize: React.PropTypes.shape({
+    initSize: ImmutablePropTypes.shape({
       w: React.PropTypes.number,
       h: React.PropTypes.number
     }),
@@ -26,23 +27,25 @@ let Popup = React.createClass({
   getDefaultProps() {
     return {
       title: 'Popup',
-      initPosition: {
+      initPosition: Immutable.Map({
         x: 100,
         y: 100
-      },
-      initSize: {
+      }),
+      initSize: Immutable.Map({
         width: 300,
         height: 200
-      }
+      })
     };
   },
 
   getInitialState() {
-    return _.clone(this.props.initSize);
+    return {size: this.props.initSize};
   },
 
   handleResize(event, {element, size}) {
-    this.setState(size);
+    this.setState(prev => ({
+      size: prev.size.merge(size)
+    }));
   },
   handleResizeStop(event, {element, size}) {
     if (this.props.onResizeStop)
@@ -58,16 +61,16 @@ let Popup = React.createClass({
     let { initPosition, initSize, ...other } = this.props;
     return (
       <Draggable handle='.header'
-                 start={initPosition}
+                 start={initPosition.toJS()}
                  moveOnStartChange={true}
                  onStop={this.handleMoveStop}>
-        <Resizable width={initSize.width} height={initSize.height}
+        <Resizable width={initSize.get('width')} height={initSize.get('height')}
                    minConstraints={[150, 150]}
                    maxConstraints={[500, 300]}
                    onResize={this.handleResize}
                    onResizeStop={this.handleResizeStop}>
           <div className="popup"
-               style={this.state}
+               style={this.state.size.toJS()}
                {...other}>
             <div className="header">
               Header
