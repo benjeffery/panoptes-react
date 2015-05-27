@@ -12,6 +12,7 @@ var LayoutStore = Fluxxor.createStore({
         'T1': {
           component: 'ui/HelloWorld',
           title: 'WTF TAB',
+          faIcon: 'bookmark',
           props: {
             msg: 'WTF'
           }
@@ -19,6 +20,7 @@ var LayoutStore = Fluxxor.createStore({
         'T2': {
           component: 'ui/HelloWorld',
           title: 'OMG TAB',
+          faIcon: 'bookmark',
           props: {
             msg: 'OMG'
           }
@@ -26,6 +28,7 @@ var LayoutStore = Fluxxor.createStore({
         'P1': {
           component: 'ui/HelloWorld',
           title: 'WTF POP',
+          faIcon: 'bookmark',
           props: {
             msg: 'WTF'
           }
@@ -33,6 +36,7 @@ var LayoutStore = Fluxxor.createStore({
         'P2': {
           component: 'ui/HelloWorld',
           title: 'OMG POP',
+          faIcon: 'bookmark',
           initPosition: {
             x: 500,
             y: 100,

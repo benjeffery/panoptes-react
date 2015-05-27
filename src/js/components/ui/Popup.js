@@ -3,8 +3,10 @@ const PureRenderMixin = require('mixins/PureRenderMixin');
 const _ = require('lodash');
 const Immutable = require('immutable');
 const ImmutablePropTypes = require('react-immutable-proptypes');
+
 const Draggable = require('react-draggable');
 const Resizable = require('react-resizable').Resizable;
+const Icon = require('ui/Icon');
 
 
 let Popup = React.createClass({
@@ -12,6 +14,7 @@ let Popup = React.createClass({
 
   propTypes: {
     title: React.PropTypes.string, //Used in title bar
+    faIcon: React.PropTypes.string,
     initPosition: ImmutablePropTypes.shape({
       x: React.PropTypes.number,
       y: React.PropTypes.number
@@ -58,7 +61,7 @@ let Popup = React.createClass({
   },
 
   render() {
-    let { initPosition, initSize, ...other } = this.props;
+    let { initPosition, initSize, title, faIcon, ...other } = this.props;
     return (
       <Draggable handle='.header'
                  start={initPosition.toJS()}
@@ -73,7 +76,8 @@ let Popup = React.createClass({
                style={this.state.size.toJS()}
                {...other}>
             <div className="header">
-              Header
+              {faIcon ? <Icon className='icon' name={faIcon}/> : null}
+              {title}
             </div>
             <div className="body">
               {this.props.children}

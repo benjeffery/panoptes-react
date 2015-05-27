@@ -38,17 +38,15 @@ let Panoptes = React.createClass({
         </TabbedArea>
         <Popups>
           {state.getIn(['popups','components']).map(popupId => {
-            let popup = state.getIn(['components',popupId]);
+            let popup = state.getIn(['components',popupId]).toObject();
             return (
               <Popup
+                {...popup}
                 compId={popupId}
                 key={popupId}
-                title={popup.get('title')}
-                initPosition={popup.get('initPosition')}
-                initSize={popup.get('initSize')}
                 onMoveStop={actions.popupMove.bind(this, popupId)}
                 onResizeStop={actions.popupResize.bind(this, popupId)}>
-                  {React.createElement(require(popup.get('component')), popup.get('props').toObject())}
+                  {React.createElement(require(popup.component), popup.props.toObject())}
               </Popup>
             )})}
         </Popups>

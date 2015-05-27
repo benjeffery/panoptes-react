@@ -34,8 +34,14 @@ module.exports = {
     src: 'src/index.html',
     dest: dest
   },
+  fonts: {
+    src: 'src/fonts/**/*.{ttf,woff,eof,svg}',
+    dest: dest+'/fonts'
+  },
   watch: {
     src: 'src/**/*.*',
     tasks: ['build']
   }
 };
+
+
