@@ -6,7 +6,7 @@ const LAYOUT = Constants.LAYOUT;
 
 var LayoutStore = Fluxxor.createStore({
 
-  initialize: function () {
+  initialize() {
     this.state = Immutable.fromJS({
       components: {
         'T1': {
@@ -39,7 +39,7 @@ var LayoutStore = Fluxxor.createStore({
           faIcon: 'bookmark',
           initPosition: {
             x: 500,
-            y: 100,
+            y: 100
           },
           initSize: {
             width: 300,
@@ -62,32 +62,43 @@ var LayoutStore = Fluxxor.createStore({
     });
 
     this.bindActions(
+      LAYOUT.NOTIFY, this.notify,
       LAYOUT.TAB_SWITCH, this.tabSwitch,
       LAYOUT.POPUP_MOVE, this.popupMove,
       LAYOUT.POPUP_RESIZE, this.popupResize
     );
   },
 
-  tabSwitch: function (payload) {
+  notify(payload) {
+    this.lastNotification = payload;
+    this.emit('notify');
+  },
+
+  tabSwitch(payload) {
     this.state = this.state.setIn(['tabs', 'selectedTab'], payload.compId);
     this.emit('change');
   },
 
-  popupMove: function (payload) {
+  popupMove(payload) {
     let {compId, pos} = payload;
     this.state = this.state.mergeIn(['components', compId, 'initPosition'], pos);
     this.emit('change');
   },
 
-  popupResize: function (payload) {
+  popupResize(payload) {
     let {compId, size} = payload;
     this.state = this.state.mergeIn(['components', compId, 'initSize'], size);
     this.emit('change');
   },
 
-  getState: function () {
+  getState() {
     return this.state;
+  },
+
+  getLastNotification() {
+    return this.lastNotification;
   }
+
 
 });
 

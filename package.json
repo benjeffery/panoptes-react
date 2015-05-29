@@ -47,6 +47,7 @@
     "react": "^0.13.3",
     "react-draggable": "^0.8.0",
     "react-immutable-proptypes": "^0.1.7",
+    "react-notification-system": "^0.1.10",
     "react-resizable": "^0.4.0"
   }
 }

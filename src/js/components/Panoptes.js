@@ -1,5 +1,6 @@
 const React = require('react');
 const _ = require('lodash');
+var NotificationSystem = require('react-notification-system');
 
 const FluxMixin = require('mixins/FluxMixin');
 const StoreWatchMixin = require('mixins/StoreWatchMixin');
@@ -12,6 +13,12 @@ const HelloWorld = require('ui/HelloWorld');
 
 let Panoptes = React.createClass({
   mixins: [ FluxMixin, StoreWatchMixin('LayoutStore')],
+
+  componentDidMount() {
+    let store = this.getFlux().store('LayoutStore');
+    store.on("notify",
+      () => this.refs.notificationSystem.addNotification(store.getLastNotification()));
+  },
 
   getStateFromFlux() {
     return this.getFlux().store('LayoutStore').getState();
@@ -50,6 +57,7 @@ let Panoptes = React.createClass({
               </Popup>
             )})}
         </Popups>
+        <NotificationSystem ref="notificationSystem" />
       </div>
     );
   }

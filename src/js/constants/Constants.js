@@ -8,6 +8,7 @@ function nameSpace(namespace, obj) {
 }
 
 let layout = keyMirror({
+  NOTIFY: null,
   TAB_SWITCH: null,
   POPUP_MOVE: null,
   POPUP_RESIZE: null
