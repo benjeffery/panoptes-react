@@ -7,9 +7,9 @@ const LayoutActions = require('actions/LayoutActions');
 const Metadata = require('panoptes/Metadata');
 
 Metadata.fetchMetadata()
-  .then(data => console.log(data))
-  .catch(data => console.log(data));
-
+  .then(data => console.log(data), error => {
+    throw error;
+  }).done();
 let stores = {
   LayoutStore: new LayoutStore()
 };
