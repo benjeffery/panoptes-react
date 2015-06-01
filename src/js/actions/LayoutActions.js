@@ -2,15 +2,11 @@ const Constants = require('../constants/Constants');
 const LAYOUT = Constants.LAYOUT;
 
 let LayoutActions = {
+  modalClose() {
+    this.dispatch(LAYOUT.MODAL_CLOSE);
+  },
   notify(notification) {
     this.dispatch(LAYOUT.NOTIFY, notification);
-  },
-
-  tabSwitch(compId) {
-    debugger;
-    this.dispatch(LAYOUT.TAB_SWITCH, {
-      compId: compId
-    });
   },
   popupMove(compId, pos) {
     this.dispatch(LAYOUT.POPUP_MOVE, {
@@ -22,6 +18,12 @@ let LayoutActions = {
     this.dispatch(LAYOUT.POPUP_RESIZE, {
       compId: compId,
       size: size
+    });
+  },
+  tabSwitch(compId) {
+    debugger;
+    this.dispatch(LAYOUT.TAB_SWITCH, {
+      compId: compId
     });
   }
 };

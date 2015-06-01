@@ -57,26 +57,32 @@ var LayoutStore = Fluxxor.createStore({
       popups: {
         components: ['P1', 'P2']
 
+      },
+      modal: {
+        component: 'ui/HelloWorld',
+        props: {
+          msg: 'MODAL IN YOUR FACE!'
+        }
       }
-
     });
 
     this.bindActions(
+      LAYOUT.MODAL_CLOSE, this.modalClose,
       LAYOUT.NOTIFY, this.notify,
-      LAYOUT.TAB_SWITCH, this.tabSwitch,
       LAYOUT.POPUP_MOVE, this.popupMove,
-      LAYOUT.POPUP_RESIZE, this.popupResize
+      LAYOUT.POPUP_RESIZE, this.popupResize,
+      LAYOUT.TAB_SWITCH, this.tabSwitch
     );
+  },
+
+  modalClose() {
+    this.state = this.state.set('modal', Immutable.Map());
+    this.emit('change');
   },
 
   notify(payload) {
     this.lastNotification = payload;
     this.emit('notify');
-  },
-
-  tabSwitch(payload) {
-    this.state = this.state.setIn(['tabs', 'selectedTab'], payload.compId);
-    this.emit('change');
   },
 
   popupMove(payload) {
@@ -88,6 +94,11 @@ var LayoutStore = Fluxxor.createStore({
   popupResize(payload) {
     let {compId, size} = payload;
     this.state = this.state.mergeIn(['components', compId, 'initSize'], size);
+    this.emit('change');
+  },
+
+  tabSwitch(payload) {
+    this.state = this.state.setIn(['tabs', 'selectedTab'], payload.compId);
     this.emit('change');
   },
 

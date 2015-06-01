@@ -1,6 +1,6 @@
 const React = require('react');
 const _ = require('lodash');
-var NotificationSystem = require('react-notification-system');
+const NotificationSystem = require('react-notification-system');
 
 const FluxMixin = require('mixins/FluxMixin');
 const StoreWatchMixin = require('mixins/StoreWatchMixin');
@@ -9,6 +9,7 @@ const TabbedArea = require('ui/TabbedArea');
 const TabPane = require('ui/TabPane');
 const Popups = require('ui/Popups');
 const Popup = require('ui/Popup');
+const Modal = require('ui/Modal');
 const HelloWorld = require('ui/HelloWorld');
 
 let Panoptes = React.createClass({
@@ -27,19 +28,19 @@ let Panoptes = React.createClass({
   render() {
     let actions = this.getFlux().actions.layout;
     let state = this.state;
-
+    let modal = this.state.get('modal').toObject();
     return (
       <div>
         <TabbedArea activeTab={state.getIn(['tabs','selectedTab'])}
                     onSelect={actions.tabSwitch}>
           {state.getIn(['tabs','components']).map(tabId => {
-            let tab = state.getIn(['components',tabId]);
+            let tab = state.getIn(['components',tabId]).toObject();
             return (
               <TabPane
                 compId={tabId}
                 key={tabId}
-                title={tab.get('title')}>
-                  {React.createElement(require(tab.get('component')), tab.get('props').toObject())}
+                title={tab.title}>
+                  {React.createElement(require(tab.component), tab.props.toObject())}
               </TabPane>
             )})}
         </TabbedArea>
@@ -57,6 +58,10 @@ let Panoptes = React.createClass({
               </Popup>
             )})}
         </Popups>
+        <Modal visible={modal.component ? true : false}
+               onClose={actions.modalClose}>
+          {modal.component ? React.createElement(require(modal.component), modal.props.toObject()) : null}
+        </Modal>
         <NotificationSystem ref="notificationSystem" />
       </div>
     );

@@ -17,8 +17,8 @@ let actions = {
 let flux = new Fluxxor.Flux(stores, actions);
 React.render(<Panoptes flux={flux}/>, document.getElementById('main'));
 
-Metadata.fetchMetadata(flux)
-  .then(data => console.log(data), error => {
-    throw error;
-  }).done();
+//Metadata.fetchMetadata(flux)
+//  .then(data => console.log(data), error => {
+//    throw error;
+//  }).done();
 
